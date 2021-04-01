@@ -39,6 +39,10 @@ class Controlador:
         self.volume_saida = v_saida
         self.volume_retorno = v_retorno
 
+        # DEBUG
+        print('volume_saida = ', self.volume_saida)
+        print('volume_retorno = ', self.volume_retorno)
+
     # Métodos #
     def adiciona_som(self):
         """
