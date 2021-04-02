@@ -2,7 +2,7 @@ class Som:
     """
     Representa a faixa de áudio selecionada pelo usuário.
 
-    Parâmetros
+    Atributos
     ----------
     id : int 
         Identificador único do som.
