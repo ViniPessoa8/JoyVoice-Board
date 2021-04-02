@@ -1,7 +1,7 @@
 class Controlador:
     """
     Classe controladora do sistema. Responsável por interagir
-    com as classes Model e as classes View.
+    com as classes de modelo (Model) e as classes de vizualização (View).
 
     Atributos
     ---------
