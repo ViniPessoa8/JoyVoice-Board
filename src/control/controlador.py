@@ -6,11 +6,9 @@ class Controlador:
     Atributos
     ---------
     volume_saida : int
-        Volume que o áudio será reproduzido no microfone do usuário. 
-        (O padrão é 100)
+        Volume que o áudio será reproduzido no microfone do usuário.b(O padrão é 100)
     volume_retorno : int
-        Volume que o usuário escutará o audio em seu dispositivo de saída (Fone/Caixa de som). 
-        (O padrão é 100)
+        Volume que o usuário escutará o audio em seu dispositivo de saída (Fone/Caixa de som). (O padrão é 100)
 
     Métodos
     -------
