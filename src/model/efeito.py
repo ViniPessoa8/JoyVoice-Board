@@ -8,6 +8,13 @@ class Efeito:
         Identificador único de cada efeito.
     titulo : String
         Título do efeito, para que o usuário possa identificá-lo.
+
+    Métodos
+    -------
+    ativar()
+        Ativa o efeito no microfone do usuário.
+    desativar()
+        Desativa o efeito no microfone do usuário.
     """
 
     def __init__(self, id_efeito, titulo):

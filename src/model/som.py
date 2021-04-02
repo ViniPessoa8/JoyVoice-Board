@@ -12,6 +12,13 @@ class Som:
         Título do som, para que o usuário possa identificá-lo.
     voulme : int
         Volume de reprodução do som. (Padrão 100)
+
+    Métodos
+    -------
+    tocar()
+        Inicia a reprodução do som.
+    parar()
+        Para a reprodução de todos os sons em execução.
     """
     def __init__(self, id_som, titulo, caminho):
         """
@@ -24,7 +31,7 @@ class Som:
 
     def tocar(self):
         """
-        Reproduz o som
+        Inicia a reprodução do som.
         """
         print('tocar()')
 
