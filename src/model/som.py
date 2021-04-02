@@ -11,7 +11,7 @@ class Som:
     titulo : String
         Título do som, para que o usuário possa identificá-lo.
     voulme : int
-        Volume de reprodução do som. (Padrão 100)
+        Volume de reprodução do som. (O padrão é 100)
 
     Métodos
     -------
