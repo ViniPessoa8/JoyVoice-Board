@@ -48,6 +48,11 @@ class Controlador:
         print('volume_saida = ', self.volume_saida)
         print('volume_retorno = ', self.volume_retorno)
 
+    def alterar_volume(self, alt_volume_saida, alt_volume_retorno):
+        self.m_volume_de_saida = alt_volume_saida
+        self.m_volume_de_retorno = alt_volume_retorno   
+        print('alteração de volume {} {}.'.format(self.m_volume_de_retorno, self.m_volume_de_saida))
+
     # Métodos #
     def adiciona_som(self):
         """
@@ -91,3 +96,4 @@ if __name__ == '__main__':
     controlador.remove_som()
     controlador.toca_som(10)
     controlador.para_som()
+    controlador.alterar_som(10,20)
