@@ -62,6 +62,12 @@ class Soundboard:
         """
         print('parar_som()')
 
+    def main(self):
+        self.adiciona_som()
+        self.remove_som()
+        self.toca_som(10)
+        self.para_som()
+
 # Main #
 # Usada pra testar os métodos da classe
 if __name__ == '__main__':
@@ -69,7 +75,4 @@ if __name__ == '__main__':
     soundboard = Soundboard()
     
     # Teste dos métodos do controlador
-    soundboard.adiciona_som()
-    soundboard.remove_som()
-    soundboard.toca_som(10)
-    soundboard.para_som()
+    soundboard.main()
