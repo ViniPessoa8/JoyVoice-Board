@@ -60,8 +60,6 @@ class Soundboard:
         """
         self.salva_som_json(titulo, caminho)
 
-        print('adiciona_som({})'.format(caminho))
-
     def remove_som(self):
         """
         Remove um áudio da lista de sons do programa.
@@ -200,9 +198,12 @@ class Soundboard:
     # Main #
     # Usada pra testar os métodos da classe
     def main(self):
-        # TODO: checar se caminho é None
         caminho = self.seleciona_arquivo()
-        self.adiciona_som('cavalo', caminho)
+        print('CAMINHO:', caminho)
+        if (caminho is not None and caminho != () ):
+            self.adiciona_som('cavalo', caminho)
+        else:
+            print('Caminho inválido.')
 
 if __name__ == '__main__':
     # Instância do controlador
