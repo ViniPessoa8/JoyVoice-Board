@@ -1,3 +1,7 @@
+from pydub import AudioSegment
+from tkinter import Tk     # from tkinter import Tk for Python 3.x
+from tkinter.filedialog import askopenfilename
+
 class Soundboard:
     """
     Classe gerenciadora dos sons. Responsável por 
@@ -31,12 +35,14 @@ class Soundboard:
         self.efeitos = []
 
     # Métodos #
-    def adiciona_som(self):
+    def adiciona_som(self, caminho):
         """
         Adiciona um áudio do computador, selecionado pelo usuário, e adiciona 
         na lista de áudios do programa.
         """
-        print('adicionar_som()')
+        som = AudioSegment.from_mp3(caminho)
+
+        print('adicionar_som({})'.format(caminho))
 
     def remove_som(self):
         """
@@ -62,17 +68,25 @@ class Soundboard:
         """
         print('parar_som()')
 
-    def main(self):
-        self.adiciona_som()
-        self.remove_som()
-        self.toca_som(10)
-        self.para_som()
+    def seleciona_arquivo(self):
+        Tk().withdraw() # Faz o programa abrir em modo janela.
+        caminho_arquivo = askopenfilename(initialdir='~/Music', filetypes=[('Audio', '*.mp3 *.wav')])
+        if (caminho_arquivo is not None):
+            print(caminho_arquivo)
+            return caminho_arquivo
+        else:
+            return ''
 
-# Main #
-# Usada pra testar os métodos da classe
+    # Main #
+    # Usada pra testar os métodos da classe
+    def main(self):
+        caminho = self.seleciona_arquivo()
+        self.adiciona_som(caminho)
+
+
 if __name__ == '__main__':
     # Instância do controlador
     soundboard = Soundboard()
     
-    # Teste dos métodos do controlador
+    # Chama a função 'main' do soundboard
     soundboard.main()
