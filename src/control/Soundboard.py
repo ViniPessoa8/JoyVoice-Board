@@ -17,8 +17,6 @@ class Soundboard:
     ---------
     sons : list 
         Lista do caminho dos sons no computador.
-    efeitos : list
-        Lista de efeitos. 
 
     Métodos
     -------
@@ -50,7 +48,6 @@ class Soundboard:
         Construtor da classe.
         """    
         self.sons    = []
-        self.efeitos = []
 
         # Cria arquivo de sons: sons.json. (Se ainda não existir)
         if (not os.path.exists(SONS_JSON)):
