@@ -57,6 +57,12 @@ class Soundboard:
         """
         Adiciona um áudio do computador, selecionado pelo usuário, e adiciona 
         na lista de áudios do programa.
+        Parâmetros
+        ----------
+        titulo : str
+            Título identificador do arquivo.
+        caminho : str
+            Caminho do arquivo no computador do usuário.
         """
         self.salva_som_json(titulo, caminho)
 
@@ -166,7 +172,7 @@ class Soundboard:
 
     def checa_registro_json(self, registro, caminho_json):
         """
-        Chega se um <registro> já está no arquivo <caminho_json>.
+        Checa se um <registro> já está no arquivo <caminho_json>.
         Parâmetros
         ----------
         registro : dict
