@@ -120,7 +120,7 @@ class Soundboard:
         with open(caminho, 'x') as arquivo:
             json.dump(data, arquivo, indent=2)
 
-    def salva_som_json(self, titulo, caminho):
+    def salva_som_json(self, titulo, caminho, volume=100):
         """
         Registra um arquivo de som na lista em 'sons.json'.
         Parâmetros
@@ -129,6 +129,10 @@ class Soundboard:
             Título identificador do arquivo.
         caminho : str
             Caminho do arquivo no computador do usuário.
+        volume : int
+            Volume de reprodução do áudio. 
+            Vai de 0 à 200, sendo 100 o volume normal e 200 o volume amplificado.
+            (Valor padrão: 100)
         """
         # Estruturação dos dados
         formato = caminho.split('.')[-1]
@@ -136,6 +140,7 @@ class Soundboard:
             'titulo' : titulo,
             'caminho': caminho,
             'formato': formato,
+            'volume' : volume,
         }
 
         # Verifica se o arquivo 'sons.json' existe
@@ -179,9 +184,10 @@ class Soundboard:
             Dicionário contendo o registro a ser checado.
             Espera-se o formato:
             {
-                'titulo' : ...
-                'caminho': ...
-                'formato': ...
+                'titulo' : <str> ,
+                'caminho': <str> ,
+                'formato': <str> ,
+                'volume' : <int> ,
             }
         caminho_json : str
             Caminho do arquivo onde será procurado o registro.
