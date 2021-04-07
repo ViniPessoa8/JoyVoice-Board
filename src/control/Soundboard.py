@@ -1,6 +1,10 @@
 from pydub import AudioSegment
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
+import json
+import os
+
+SONS_JSON = './data/sons.json'
 
 class Soundboard:
     """
@@ -35,12 +39,18 @@ class Soundboard:
         self.efeitos = []
 
     # Métodos #
-    def adiciona_som(self, caminho):
+    def adiciona_som(self, titulo, caminho):
         """
         Adiciona um áudio do computador, selecionado pelo usuário, e adiciona 
         na lista de áudios do programa.
         """
-        som = AudioSegment.from_mp3(caminho)
+        formato = caminho.split('.')[-1] # Do nome do arquivo, salva-se o formato.
+        # if (formato == 'mp3'):
+            # som = AudioSegment.from_mp3(caminho)
+        # elif (formato == 'wav'):
+            # som = AudioSegment.from_wav(caminho)
+
+        self.salva_som_json(titulo, caminho)
 
         print('adicionar_som({})'.format(caminho))
 
@@ -77,11 +87,46 @@ class Soundboard:
         else:
             return ''
 
+    def salva_som_json(self, titulo, caminho):
+        # Estrutura os dados
+        formato = caminho.split('.')[-1]
+        data = {
+            'titulo' : titulo,
+            'caminho': caminho,
+            'formato': formato,
+        }
+
+        # Abre o arquivo de audios em formato JSON
+        if (os.path.exists(SONS_JSON)):
+            with open(SONS_JSON, 'a+') as arquivo:
+                print('ARQUIVO ABERTO:', SONS_JSON)
+                arquivo_json = json.loads(arquivo.read())
+
+                # self.checa_registro_json(data, SONS_JSON)
+                json.dump(data, arquivo)
+                arquivo.write('\n')
+        else:
+            dados_iniciais = {
+                'sons': [],
+            }
+
+            dados_iniciais['sons'].append(data)
+            with open(SONS_JSON, 'x') as arquivo:
+                json.dump(dados_iniciais, arquivo)
+                arquivo.write('\n')
+
+    def checa_registro_json(self, registro, caminho_json):
+        with open(caminho_json) as arquivo:
+            print('caminho json:', caminho_json)
+            print('arquivo:\n', arquivo.read())
+
+            arq_json = json.load(arquivo)
+
     # Main #
     # Usada pra testar os métodos da classe
     def main(self):
         caminho = self.seleciona_arquivo()
-        self.adiciona_som(caminho)
+        self.adiciona_som('cavalo', caminho)
 
 
 if __name__ == '__main__':
