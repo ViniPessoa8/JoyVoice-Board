@@ -52,6 +52,16 @@ class Soundboard:
         self.sons    = []
         self.efeitos = []
 
+        # Cria arquivo de sons: sons.json. (Se ainda não existir)
+        if (not os.path.exists(SONS_JSON)):
+            # Configura a estrutura inicial do json
+            dados_iniciais = {
+                'sons': [],
+            }
+            
+            # Cria o arquivo 'sons.json' com o registro escrito nele.
+            self.cria_arquivo_json('sons', dados_iniciais)
+
     # Métodos #
     def adiciona_som(self, titulo, caminho):
         """
@@ -165,15 +175,7 @@ class Soundboard:
 
         # Se o arquivo 'sons.json' NÃO existe
         else:
-            # Configura a estrutura do json
-            dados_iniciais = {
-                'sons': [],
-            }
-            # Adiciona o registro
-            dados_iniciais['sons'].append(data)
-            
-            # Cria o arquivo 'sons.json' com o registro escrito nele.
-            self.cria_arquivo_json('sons', dados_iniciais)
+            print('ERRO: Arquivo \'sons.json\' não encontrado.')
 
     def checa_registro_json(self, registro, caminho_json):
         """
