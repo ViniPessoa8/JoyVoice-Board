@@ -98,10 +98,19 @@ class Soundboard:
 
         # Abre o arquivo de audios em formato JSON
         if (os.path.exists(SONS_JSON)):
-            with open(SONS_JSON, 'r+') as f:
-                if (not self.checa_registro_json(data, SONS_JSON)):
+            if (not self.checa_registro_json(data, SONS_JSON)):
+                with open(SONS_JSON, 'r+') as f:
                     print('')
                     # TODO: lê arquivo json, adiciona registro na lista 'sons' e reescreve o arquivo.
+                    dados = json.load(f)
+                    dados['sons'].append(data)
+                    print(dados)
+                
+                if (dados is not None):
+                    with open(SONS_JSON, 'w') as f:
+                        json.dump(dados, f, indent=2)
+
+
         else:
             dados_iniciais = {
                 'sons': [],
@@ -121,9 +130,8 @@ class Soundboard:
                 if (reg['caminho'] == registro['caminho']):
                     print('Registro já existe.')
                     return True
-                else:
-                    print('Registro não existe')
         
+        print('Registro não existe')
         return False
 
     # Main #
