@@ -4,6 +4,7 @@ from tkinter.filedialog import askopenfilename
 import json
 import os
 
+DATA_DIR = './data/'
 SONS_JSON = './data/sons.json'
 
 class Soundboard:
@@ -117,8 +118,7 @@ class Soundboard:
             }
             dados_iniciais['sons'].append(data)
             
-            with open(SONS_JSON, 'x') as arquivo:
-                json.dump(dados_iniciais, arquivo, indent=2)
+            self.cria_arquivo_json('sons', dados_iniciais)
 
     def checa_registro_json(self, registro, caminho_json):
         # Checa se um registro já se encontra no arquivo json
@@ -133,6 +133,11 @@ class Soundboard:
         
         print('Registro não existe')
         return False
+
+    def cria_arquivo_json(self, nome, data):
+        caminho = DATA_DIR + nome + '.json'
+        with open(caminho, 'x') as arquivo:
+                json.dump(data, arquivo, indent=2)
 
     # Main #
     # Usada pra testar os métodos da classe
