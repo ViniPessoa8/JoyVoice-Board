@@ -98,29 +98,33 @@ class Soundboard:
 
         # Abre o arquivo de audios em formato JSON
         if (os.path.exists(SONS_JSON)):
-            with open(SONS_JSON, 'a+') as arquivo:
-                print('ARQUIVO ABERTO:', SONS_JSON)
-                arquivo_json = json.loads(arquivo.read())
-
-                # self.checa_registro_json(data, SONS_JSON)
-                json.dump(data, arquivo)
-                arquivo.write('\n')
+            with open(SONS_JSON, 'r+') as f:
+                if (not self.checa_registro_json(data, SONS_JSON)):
+                    print('')
+                    # TODO: lê arquivo json, adiciona registro na lista 'sons' e reescreve o arquivo.
         else:
             dados_iniciais = {
                 'sons': [],
             }
-
             dados_iniciais['sons'].append(data)
+            
             with open(SONS_JSON, 'x') as arquivo:
-                json.dump(dados_iniciais, arquivo)
-                arquivo.write('\n')
+                json.dump(dados_iniciais, arquivo, indent=2)
 
     def checa_registro_json(self, registro, caminho_json):
-        with open(caminho_json) as arquivo:
-            print('caminho json:', caminho_json)
-            print('arquivo:\n', arquivo.read())
-
-            arq_json = json.load(arquivo)
+        # Checa se um registro já se encontra no arquivo json
+        with open(caminho_json, 'r') as arquivo:
+            print('arquivo aberto:', caminho_json)
+            dados = json.loads(arquivo.read())
+            
+            for reg in dados['sons']:
+                if (reg['caminho'] == registro['caminho']):
+                    print('Registro já existe.')
+                    return True
+                else:
+                    print('Registro não existe')
+        
+        return False
 
     # Main #
     # Usada pra testar os métodos da classe
