@@ -52,6 +52,16 @@ class Soundboard:
         self.sons    = []
         self.efeitos = []
 
+        # Cria arquivo de sons: sons.json. (Se ainda não existir)
+        if (not os.path.exists(SONS_JSON)):
+            # Configura a estrutura inicial do json
+            dados_iniciais = {
+                'sons': [],
+            }
+            
+            # Cria o arquivo 'sons.json' com o registro escrito nele.
+            self.cria_arquivo_json('sons', dados_iniciais)
+
     # Métodos #
     def adiciona_som(self, titulo, caminho):
         """
@@ -120,7 +130,7 @@ class Soundboard:
         with open(caminho, 'x') as arquivo:
             json.dump(data, arquivo, indent=2)
 
-    def salva_som_json(self, titulo, caminho):
+    def salva_som_json(self, titulo, caminho, volume=100):
         """
         Registra um arquivo de som na lista em 'sons.json'.
         Parâmetros
@@ -129,6 +139,10 @@ class Soundboard:
             Título identificador do arquivo.
         caminho : str
             Caminho do arquivo no computador do usuário.
+        volume : int
+            Volume de reprodução do áudio. 
+            Vai de 0 à 200, sendo 100 o volume normal e 200 o volume amplificado.
+            (Valor padrão: 100)
         """
         # Estruturação dos dados
         formato = caminho.split('.')[-1]
@@ -136,6 +150,7 @@ class Soundboard:
             'titulo' : titulo,
             'caminho': caminho,
             'formato': formato,
+            'volume' : volume,
         }
 
         # Verifica se o arquivo 'sons.json' existe
@@ -160,15 +175,7 @@ class Soundboard:
 
         # Se o arquivo 'sons.json' NÃO existe
         else:
-            # Configura a estrutura do json
-            dados_iniciais = {
-                'sons': [],
-            }
-            # Adiciona o registro
-            dados_iniciais['sons'].append(data)
-            
-            # Cria o arquivo 'sons.json' com o registro escrito nele.
-            self.cria_arquivo_json('sons', dados_iniciais)
+            print('ERRO: Arquivo \'sons.json\' não encontrado.')
 
     def checa_registro_json(self, registro, caminho_json):
         """
@@ -179,9 +186,10 @@ class Soundboard:
             Dicionário contendo o registro a ser checado.
             Espera-se o formato:
             {
-                'titulo' : ...
-                'caminho': ...
-                'formato': ...
+                'titulo' : <str> ,
+                'caminho': <str> ,
+                'formato': <str> ,
+                'volume' : <int> ,
             }
         caminho_json : str
             Caminho do arquivo onde será procurado o registro.
