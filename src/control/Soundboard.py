@@ -1,6 +1,7 @@
 from pydub import AudioSegment
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
+from model.Som import Som
 import json
 import os
 
@@ -29,6 +30,9 @@ class Soundboard:
         Reproduz um áudio, de acordo com o id fornecido.
     para_som() : void
         Para a reprodução do áudio em execução, se houver um.
+    carrega_sons() : void
+        Função para carregar os sons a partir do arquivo sons.json,
+        salvando os dados na variável 'sons' como instâncias da classe Som.
     seleciona_arquivo() : void
         Abre uma caixa de diálogo do sistema para que o usuário possa selecionar
         um arquivo do seu próprio computador.
@@ -96,6 +100,25 @@ class Soundboard:
         Para a reprodução do áudio em execução, se houver um.
         """
         print('parar_som()')
+
+    def carrega_sons(self):
+        """
+        Função para carregar os sons a partir do arquivo sons.json,
+        salvando os dados na variável 'sons' como instâncias da classe Som.
+        """
+        # Carrega o arquivo sons.json no modo leitura (r)
+        with open(SONS_JSON, 'r') as f:
+            # Extrai o dicionáro do arquivo sons.json
+            dados_json = json.load(f)
+
+        # Transforma os dicionarios em instâncias da classe Som
+        for som in dados_json['sons']:
+            # Cria a instância da classe Som
+            som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
+            # Adiciona a instância à lista de sons.
+            self.sons.append(som)
+
+    # Métodos Úteis #
 
     def seleciona_arquivo(self):
         """
@@ -209,12 +232,13 @@ class Soundboard:
     # Main #
     # Usada pra testar os métodos da classe
     def main(self):
-        caminho = self.seleciona_arquivo()
-        print('CAMINHO:', caminho)
-        if (caminho is not None and caminho != () ):
-            self.adiciona_som('cavalo', caminho)
-        else:
-            print('Caminho inválido.')
+        self.carregar_sons()
+        # caminho = self.seleciona_arquivo()
+        # print('CAMINHO:', caminho)
+        # if (caminho is not None and caminho != () ):
+        #     self.adiciona_som('cavalo', caminho)
+        # else:
+        #     print('Caminho inválido.')
 
 if __name__ == '__main__':
     # Instância do controlador

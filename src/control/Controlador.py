@@ -1,4 +1,4 @@
-from Soundboard import Soundboard
+from .Soundboard import Soundboard
 
 class Controlador:
     """

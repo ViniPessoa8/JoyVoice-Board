@@ -1,7 +1,9 @@
-from .controlador import Controlador
+from control.Controlador import Controlador
 
-def main():
-    controlador = Controlador()
+class Main:
+    def __init__(self):
+        self.controlador = Controlador()
+        self.controlador.soundboard.carrega_sons()
 
 if __name__ == '__main__':
-    main()
+    main = Main()
