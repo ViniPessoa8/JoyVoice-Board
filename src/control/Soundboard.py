@@ -1,6 +1,7 @@
 from pydub import AudioSegment
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
+from model.Som import Som
 import json
 import os
 
@@ -99,6 +100,23 @@ class Soundboard:
         Para a reprodução do áudio em execução, se houver um.
         """
         print('parar_som()')
+
+    def carregar_sons(self):
+        # ler o arquivo
+        with open(SONS_JSON, 'r') as f:
+            dados_json = json.load(f)
+            # print(dados_json)
+            # print(dados_json['sons'][0]['titulo'])
+        
+        # Transformar os dicionarios em instâncias da classe Som
+        for som in dados_json['sons']:
+            print(som)
+            som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
+            self.sons.append(som)
+
+        print(self.sons[0].titulo)
+
+    # Métodos Úteis #
 
     def seleciona_arquivo(self):
         """
@@ -212,12 +230,13 @@ class Soundboard:
     # Main #
     # Usada pra testar os métodos da classe
     def main(self):
-        caminho = self.seleciona_arquivo()
-        print('CAMINHO:', caminho)
-        if (caminho is not None and caminho != () ):
-            self.adiciona_som('cavalo', caminho)
-        else:
-            print('Caminho inválido.')
+        self.carregar_sons()
+        # caminho = self.seleciona_arquivo()
+        # print('CAMINHO:', caminho)
+        # if (caminho is not None and caminho != () ):
+        #     self.adiciona_som('cavalo', caminho)
+        # else:
+        #     print('Caminho inválido.')
 
 if __name__ == '__main__':
     # Instância do controlador
