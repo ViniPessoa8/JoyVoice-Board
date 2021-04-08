@@ -29,10 +29,14 @@ class Som:
         self.titulo = titulo
         self.volume = 100
 
-    def tocar(self):
+    def tocar(self, id_som, caminho, tocar):
         """
         Inicia a reprodução do som.
         """
+        self.id = id_som
+        self.caminho = caminho
+        self.volume = 100
+        self.tocar = tocar
         print('tocar()')
 
     def parar(self):
