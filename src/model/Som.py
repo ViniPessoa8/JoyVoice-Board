@@ -29,14 +29,12 @@ class Som:
         self.titulo = titulo
         self.volume = 100
 
-    def tocar(self, id_som, caminho, tocar):
+    def tocar(self):
         """
         Inicia a reprodução do som.
         """
-        self.id = id_som
-        self.caminho = caminho
-        self.volume = 100
-        self.tocar = tocar
+        # TODO: A partir do caminho do arquivo, usar a biblioteca Pydub para executar o som 
+        # O método pode ser testado na main()
         print('tocar()')
 
     def parar(self):
