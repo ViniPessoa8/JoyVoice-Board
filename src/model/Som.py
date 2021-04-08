@@ -20,7 +20,7 @@ class Som:
     parar()
         Para a reprodução de todos os sons em execução.
     """
-    def __init__(self, id_som, titulo, caminho):
+    def __init__(self, id_som, titulo, caminho, volume):
         """
         Construtor da classe.
         """
