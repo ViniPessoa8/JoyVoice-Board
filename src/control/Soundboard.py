@@ -32,6 +32,9 @@ class Soundboard:
         Reproduz um áudio, de acordo com o id fornecido.
     para_som() : void
         Para a reprodução do áudio em execução, se houver um.
+    carrega_sons() : void
+        Função para carregar os sons a partir do arquivo sons.json,
+        salvando os dados na variável 'sons' como instâncias da classe Som.
     seleciona_arquivo() : void
         Abre uma caixa de diálogo do sistema para que o usuário possa selecionar
         um arquivo do seu próprio computador.
@@ -101,20 +104,22 @@ class Soundboard:
         """
         print('parar_som()')
 
-    def carregar_sons(self):
-        # ler o arquivo
+    def carrega_sons(self):
+        """
+        Função para carregar os sons a partir do arquivo sons.json,
+        salvando os dados na variável 'sons' como instâncias da classe Som.
+        """
+        # Carrega o arquivo sons.json no modo leitura (r)
         with open(SONS_JSON, 'r') as f:
+            # Extrai o dicionáro do arquivo sons.json
             dados_json = json.load(f)
-            # print(dados_json)
-            # print(dados_json['sons'][0]['titulo'])
-        
-        # Transformar os dicionarios em instâncias da classe Som
-        for som in dados_json['sons']:
-            print(som)
-            som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
-            self.sons.append(som)
 
-        print(self.sons[0].titulo)
+        # Transforma os dicionarios em instâncias da classe Som
+        for som in dados_json['sons']:
+            # Cria a instância da classe Som
+            som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
+            # Adiciona a instância à lista de sons.
+            self.sons.append(som)
 
     # Métodos Úteis #
 
