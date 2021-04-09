@@ -40,9 +40,3 @@ class Som:
         Para a reprodução de todos os sons em execução.
         """
         print('parar()')
-
-if __name__ == '__main__':
-    som = Som(1, 'ratinhooo.mp3', '~/Downloads/ratinhooo.mp3')
-
-    som.tocar()
-    som.parar()

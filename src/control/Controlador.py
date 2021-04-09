@@ -45,12 +45,3 @@ class Controlador:
         print('alteração de volume {} {}.'.format(self.m_volume_de_retorno, self.m_volume_de_saida))
 
     # Métodos #
-    
-
-# Main #
-# Usada pra testar os métodos da classe
-if __name__ == '__main__':
-    # Instância do controlador
-    controlador = Controlador()
-    controlador.soundboard.main()
-

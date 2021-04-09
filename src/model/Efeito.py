@@ -34,9 +34,3 @@ class Efeito:
         """
         # IMPLEMENTAÇÂO #
         print('desativar()')
-
-if __name__ == '__main__':
-    efeito = Efeito(1, 'Echo')
-
-    efeito.ativar()
-    efeito.desativar() 

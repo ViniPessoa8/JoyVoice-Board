@@ -239,10 +239,3 @@ class Soundboard:
         #     self.adiciona_som('cavalo', caminho)
         # else:
         #     print('Caminho inválido.')
-
-if __name__ == '__main__':
-    # Instância do controlador
-    soundboard = Soundboard()
-    
-    # Chama a função 'main' do soundboard
-    soundboard.main()
