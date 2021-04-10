@@ -1,4 +1,5 @@
 from pydub import AudioSegment
+from pydub.playback import play
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
 from model.Som import Som
@@ -62,6 +63,9 @@ class Soundboard:
             
             # Cria o arquivo 'sons.json' com o registro escrito nele.
             self.cria_arquivo_json('sons', dados_iniciais)
+        
+        self.carrega_sons()
+        print(self.sons)
 
     # Métodos #
     def adiciona_som(self, titulo, caminho):
@@ -84,6 +88,7 @@ class Soundboard:
         print('remover_som()')
 
     def toca_som(self, id):
+        print('tocar_som(%d)' % id)
         """
         Reproduz um áudio, de acordo com o id fornecido.
 
@@ -92,8 +97,24 @@ class Soundboard:
         id : int
             Representa o ID do som a ser reproduzido. 
         """
+        som = self.sons[id]
+        caminho = som.caminho 
+        formato = caminho.split('.')[-1]
+        volume = str(som.volume)
+        print('formato = ', formato)
+        print('[Arquivo:', som.titulo + ']')
+        print('[volume=', volume + ']')
 
-        print('tocar_som(%d)' % id)
+        # Abre o arquivo 
+        try:
+            with open(caminho, 'rb') as f:
+                # Carrega audio
+                audio = AudioSegment.from_file(f, format=formato, parameters=['-vol', volume])
+                # Reproduz o audio com o método 'play' da bibiloteca pydub. 
+                print('[tocando]')
+                play(audio)
+        except FileNotFoundError:
+            print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
     def para_som(self):
         """
