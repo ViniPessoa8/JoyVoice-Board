@@ -1,6 +1,5 @@
-from pydub import AudioSegment # Importa a classe AudioSegment
-from pydub.playback import play # Importa uma função da classe Playback
-from tkinter import Tk 
+import simpleaudio
+from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
 from model.Som import Som
 import json
