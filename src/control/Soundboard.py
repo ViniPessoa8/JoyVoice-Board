@@ -97,15 +97,18 @@ class Soundboard:
         id : int
             Representa o ID do som a ser reproduzido. 
         """
+        # Prepara os dados
         som = self.sons[id]
         caminho = som.caminho 
         formato = caminho.split('.')[-1]
         volume = str(som.volume)
+
+        # Imprime informações sobre o som no console
         print('formato = ', formato)
         print('[Arquivo:', som.titulo + ']')
         print('[volume=', volume + ']')
 
-        # Abre o arquivo 
+        # Abre o arquivo e executa
         try:
             with open(caminho, 'rb') as f:
                 # Carrega audio
