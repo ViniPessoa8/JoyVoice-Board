@@ -1,4 +1,4 @@
-from pydub import AudioSegment
+import simpleaudio
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
 from model.Som import Som
