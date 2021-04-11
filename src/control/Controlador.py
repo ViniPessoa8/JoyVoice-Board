@@ -1,4 +1,5 @@
 from .Soundboard import Soundboard
+from .Soundboard import SONS_JSON
 
 class Controlador:
     """
@@ -39,9 +40,38 @@ class Controlador:
         print('volume_saida = ', self.volume_saida)
         print('volume_retorno = ', self.volume_retorno)
 
+    # Métodos #
+    # Loop para seleção de arquivos
+    def loop_selecao_arquivos(self):
+        rodando = True
+        while (rodando):
+            # Seleciona arquivo
+            caminho_arquivo = self.soundboard.seleciona_arquivo()
+            print(caminho_arquivo)
+
+            # Lê o titulo do arquivo
+            titulo = input("Digite o titulo do arquivo:")
+
+            # Salva arquivo em sons.json
+            with open(SONS_JSON, 'rb'):
+                self.soundboard.salva_som_json(titulo, caminho_arquivo)
+
+            # Verifica fim do loop
+            while (True):
+                # Lẽ a resposta
+                resposta = input('Deseja continuar?(S/N)')
+    
+                # Verif
+                if (resposta == 'N' or resposta == 'n'):
+                    rodando = False
+                    break
+                elif (resposta == 'S' or resposta == 's'):
+                    rodando = True
+                    break
+                else:
+                    print('Resposta inválida. Tente novamente.')
+
     def alterar_volume(self, alt_volume_saida, alt_volume_retorno):
         self.m_volume_de_saida = alt_volume_saida
         self.m_volume_de_retorno = alt_volume_retorno   
         print('alteração de volume {} {}.'.format(self.m_volume_de_retorno, self.m_volume_de_saida))
-
-    # Métodos #
