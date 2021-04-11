@@ -1,4 +1,5 @@
-import simpleaudio
+import simpleaudio as sa
+from pydub import AudioSegment
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
 from model.Som import Som
@@ -107,14 +108,26 @@ class Soundboard:
         print('[Arquivo:', som.titulo + ']')
         print('[volume=', volume + ']')
 
+        # Trata formato: se for mp3, converte para wav.
+        if (formato != 'wav'):
+            # Salva o caminho do arquivo wav
+            novo_caminho = self.formata_pra_wav(som=som)
+            if (novo_caminho is not None):
+                caminho = novo_caminho
+                
+
         # Abre o arquivo e executa
         try:
             with open(caminho, 'rb') as f:
                 # Carrega audio
-                audio = AudioSegment.from_file(f, format=formato, parameters=['-vol', volume])
-                # Reproduz o audio com o método 'play' da bibiloteca pydub. 
+                arq_wave = sa.WaveObject.from_wave_file(f)
+
+                # Reproduz o audio 
                 print('[tocando]')
-                play(audio)
+                play_obj = arq_wave.play()
+                play_obj.wait_done() # Aguarda o fim do áudio
+
+
         except FileNotFoundError:
             print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
@@ -251,6 +264,38 @@ class Soundboard:
         
         print('Registro não existe')
         return False
+
+    def formata_pra_wav(self, som):
+        """
+        Converte um arquivo para o formato WAV, utilizando o método `export`
+        da biblioteca pydub. 
+        `Documentação do método export <https://github.com/jiaaro/pydub/blob/master/API.markdown#audiosegmentexport>`_
+
+        Parametros
+        ----------
+        som : Som
+            Instância da classe Som. Referente ao audio que será convertido.
+        """
+        try:
+            with open(som.caminho, 'rb') as f:
+                # Carrega o audio
+                audio = AudioSegment.from_file(f, format=som.formato)
+                # Formata o caminho do arquivo
+                caminho_arquivo = './data/tmp_audio/' + som.titulo + '.wav'
+
+                # Checa se o arquivo .wav já existe, senão o cria.
+                if (not os.path.exists(caminho_arquivo)):
+                    # Usa o método export da classe pydub para converter o arquivo
+                    audio.export(caminho_arquivo, format='wav')
+                    
+                    # TODO: salvar o caminho no arquivo sons.json (Alterar Registro)
+
+                    # retorna o caminho do novo arquivo .wav criado
+                    return caminho_arquivo
+
+        except FileNotFoundError:
+            print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
+
 
     # Main #
     # Usada pra testar os métodos da classe
