@@ -13,6 +13,8 @@ class Soundboard:
     """
     Classe gerenciadora dos sons. Responsável por 
     ler, armazenar, reproduzir, interromper e remover os sons.
+
+    Utiliza a biblioteca simpleaudio para a manipulação dos áudios.
     
     Atributos
     ---------
@@ -25,11 +27,14 @@ class Soundboard:
         Adiciona um áudio do computador, selecionado pelo usuário, e adiciona 
         na lista de áudios do programa.
     remove_som() : void
-        Remove um áudiso da lista de sons do programa.
+        Remove um áudio da lista de sons do programa.
     toca_som(id) : void
         Reproduz um áudio, de acordo com o id fornecido.
     para_som() : void
         Para a reprodução do áudio em execução, se houver um.
+
+    Métodos Úteis
+    -------------
     carrega_sons() : void
         Função para carregar os sons a partir do arquivo sons.json,
         salvando os dados na variável 'sons' como instâncias da classe Som.
@@ -232,6 +237,7 @@ class Soundboard:
         print('Registro não existe')
         return False
 
+    def 
     # Main #
     # Usada pra testar os métodos da classe
     def main(self):
