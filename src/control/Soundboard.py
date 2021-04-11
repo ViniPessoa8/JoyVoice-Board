@@ -1,4 +1,5 @@
-import simpleaudio
+import simpleaudio as sa
+from pydub import AudioSegment
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
 from model.Som import Som
@@ -6,8 +7,9 @@ import json
 import os
 
 # Constantes
-DATA_DIR = './data/'
-SONS_JSON = './data/sons.json'
+DATA_DIR      = './data/'
+SONS_JSON     = './data/sons.json'
+TMP_AUDIO_DIR = './data/tmp_audio/'
 
 class Soundboard:
     """
@@ -56,19 +58,13 @@ class Soundboard:
         """
         Construtor da classe.
         """    
+        # Inicialização de variáveis
         self.sons    = []
 
-        # Cria arquivo de sons: sons.json. (Se ainda não existir)
-        if (not os.path.exists(SONS_JSON)):
-            # Configura a estrutura inicial do json
-            dados_iniciais = {
-                'sons': [],
-            }
-            
-            # Cria o arquivo 'sons.json' com o registro escrito nele.
-            self.cria_arquivo_json('sons', dados_iniciais)
+        # Criação das pastas do projeto
+        self.cria_pastas_projeto()
         
-        # Carrega sons do arquivo 'sons.json'
+        # Carregamento dos sons listados no arquivo 'sons.json'
         self.carrega_sons()
 
     # Métodos #
@@ -95,13 +91,43 @@ class Soundboard:
         """
         Reproduz um áudio, de acordo com o id fornecido.
 
-        Parâmetros
+        Parametros
         ----------
         id : int
             Representa o ID do som a ser reproduzido. 
         """
-
         print('tocar_som(%d)' % id)
+
+        # Prepara os dados
+        som = self.sons[id]
+        caminho = som.caminho 
+        formato = caminho.split('.')[-1]
+        volume = str(som.volume)
+
+        # Imprime informações sobre o som no console
+        print('Som({}, {}, {}, {}'.format(som.titulo, caminho, formato, volume))
+
+        # Trata formato: se for mp3, converte para wav.
+        if (formato != 'wav'):
+            # Salva o caminho do arquivo wav
+            novo_caminho = self.formata_pra_wav(som=som)
+            if (novo_caminho is not None):
+                caminho = novo_caminho
+                
+        # Abre o arquivo e executa
+        try:
+            with open(caminho, 'rb') as f:
+                # Carrega audio
+                arq_wave = sa.WaveObject.from_wave_file(f)
+
+                # Reproduz o audio 
+                print('[Tocando {}]'.format(caminho))
+                play_obj = arq_wave.play()
+                play_obj.wait_done() # Aguarda o fim do áudio
+
+
+        except FileNotFoundError:
+            print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
     def para_som(self):
         """
@@ -236,6 +262,57 @@ class Soundboard:
         
         print('Registro não existe')
         return False
+
+    def formata_pra_wav(self, som):
+        """
+        Converte um arquivo para o formato WAV, utilizando o método `export`
+        da biblioteca pydub. 
+        `Documentação do método export <https://github.com/jiaaro/pydub/blob/master/API.markdown#audiosegmentexport>`_
+
+        Parametros
+        -----------
+        som : Som
+            Instância da classe Som. Referente ao audio que será convertido.
+        """
+        # Preparação dos dados
+        formato = som.caminho.split('.')[-1]
+
+        try:
+            with open(som.caminho, 'rb') as f:
+                # Carrega o audio
+                audio = AudioSegment.from_file(f, format=formato)
+                # Formata o caminho do arquivo
+                caminho_arquivo = './data/tmp_audio/' + som.titulo + '.wav'
+
+                # Checa se o arquivo .wav já existe, senão o cria.
+                if (not os.path.exists(caminho_arquivo)):
+                    # Usa o método export da classe pydub para converter o arquivo
+                    audio.export(caminho_arquivo, format='wav')
+                    
+                # retorna o caminho do novo arquivo .wav criado
+                return caminho_arquivo
+
+        except FileNotFoundError:
+            print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
+
+    def cria_pastas_projeto(self):
+        # data/
+        if (not os.path.exists(DATA_DIR)):
+            os.mkdir(DATA_DIR)
+
+        # tmp_audio/
+        if (not os.path.exists(TMP_AUDIO_DIR)):
+            os.mkdir(TMP_AUDIO_DIR)
+
+        # data/sons.json
+        if (not os.path.exists(SONS_JSON)):
+            # Configura a estrutura inicial do json
+            dados_iniciais = {
+                'sons': [],
+            }
+            
+            # Cria o arquivo 'sons.json' com o registro escrito nele.
+            self.cria_arquivo_json('sons', dados_iniciais)
 
     # Main #
     # Usada pra testar os métodos da classe
