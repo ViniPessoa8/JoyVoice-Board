@@ -7,8 +7,9 @@ import json
 import os
 
 # Constantes
-DATA_DIR = './data/'
-SONS_JSON = './data/sons.json'
+DATA_DIR      = './data/'
+SONS_JSON     = './data/sons.json'
+TMP_AUDIO_DIR = '.data/tmp_audio/'
 
 class Soundboard:
     """
@@ -52,19 +53,13 @@ class Soundboard:
         """
         Construtor da classe.
         """    
+        # Inicialização de variáveis
         self.sons    = []
 
-        # Cria arquivo de sons: sons.json. (Se ainda não existir)
-        if (not os.path.exists(SONS_JSON)):
-            # Configura a estrutura inicial do json
-            dados_iniciais = {
-                'sons': [],
-            }
-            
-            # Cria o arquivo 'sons.json' com o registro escrito nele.
-            self.cria_arquivo_json('sons', dados_iniciais)
+        # Criação das pastas do projeto
+        self.cria_pastas_projeto()
         
-        # Carrega sons do arquivo 'sons.json'
+        # Carregamento dos sons listados no arquivo 'sons.json'
         self.carrega_sons()
 
     # Métodos #
@@ -295,6 +290,24 @@ class Soundboard:
         except FileNotFoundError:
             print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
+    def cria_pastas_projeto():
+        # data/
+        if (not os.path.exists(DATA_DIR)):
+            os.mkdir(DATA_DIR)
+
+        # tmp_audio/
+        if (not os.path.exists(TMP_AUDIO_DIR)):
+            os.mkdir(TMP_AUDIO_DIR)
+
+        # data/sons.json
+        if (not os.path.exists(SONS_JSON)):
+            # Configura a estrutura inicial do json
+            dados_iniciais = {
+                'sons': [],
+            }
+            
+            # Cria o arquivo 'sons.json' com o registro escrito nele.
+            self.cria_arquivo_json('sons', dados_iniciais)
 
     # Main #
     # Usada pra testar os métodos da classe
