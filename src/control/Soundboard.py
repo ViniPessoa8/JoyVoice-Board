@@ -105,9 +105,7 @@ class Soundboard:
         volume = str(som.volume)
 
         # Imprime informações sobre o som no console
-        print('formato = ', formato)
-        print('[Arquivo:', som.titulo + ']')
-        print('[volume=', volume + ']')
+        print('Som({}, {}, {}, {}'.format(som.titulo, caminho, formato, volume))
 
         # Trata formato: se for mp3, converte para wav.
         if (formato != 'wav'):
@@ -116,7 +114,6 @@ class Soundboard:
             if (novo_caminho is not None):
                 caminho = novo_caminho
                 
-
         # Abre o arquivo e executa
         try:
             with open(caminho, 'rb') as f:
@@ -124,7 +121,7 @@ class Soundboard:
                 arq_wave = sa.WaveObject.from_wave_file(f)
 
                 # Reproduz o audio 
-                print('[tocando]')
+                print('[Tocando {}]'.format(caminho))
                 play_obj = arq_wave.play()
                 play_obj.wait_done() # Aguarda o fim do áudio
 
@@ -277,10 +274,13 @@ class Soundboard:
         som : Som
             Instância da classe Som. Referente ao audio que será convertido.
         """
+        # Preparação dos dados
+        formato = som.caminho.split('.')[-1]
+
         try:
             with open(som.caminho, 'rb') as f:
                 # Carrega o audio
-                audio = AudioSegment.from_file(f, format=som.formato)
+                audio = AudioSegment.from_file(f, format=formato)
                 # Formata o caminho do arquivo
                 caminho_arquivo = './data/tmp_audio/' + som.titulo + '.wav'
 
@@ -289,10 +289,8 @@ class Soundboard:
                     # Usa o método export da classe pydub para converter o arquivo
                     audio.export(caminho_arquivo, format='wav')
                     
-                    # TODO: salvar o caminho no arquivo sons.json (Alterar Registro)
-
-                    # retorna o caminho do novo arquivo .wav criado
-                    return caminho_arquivo
+                # retorna o caminho do novo arquivo .wav criado
+                return caminho_arquivo
 
         except FileNotFoundError:
             print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
