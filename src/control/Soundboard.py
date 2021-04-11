@@ -9,7 +9,7 @@ import os
 # Constantes
 DATA_DIR      = './data/'
 SONS_JSON     = './data/sons.json'
-TMP_AUDIO_DIR = '.data/tmp_audio/'
+TMP_AUDIO_DIR = './data/tmp_audio/'
 
 class Soundboard:
     """
@@ -290,7 +290,7 @@ class Soundboard:
         except FileNotFoundError:
             print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
-    def cria_pastas_projeto():
+    def cria_pastas_projeto(self):
         # data/
         if (not os.path.exists(DATA_DIR)):
             os.mkdir(DATA_DIR)
