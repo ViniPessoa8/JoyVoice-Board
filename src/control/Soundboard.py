@@ -237,7 +237,6 @@ class Soundboard:
         print('Registro não existe')
         return False
 
-    def 
     # Main #
     # Usada pra testar os métodos da classe
     def main(self):
