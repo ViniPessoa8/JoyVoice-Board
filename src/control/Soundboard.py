@@ -88,15 +88,16 @@ class Soundboard:
         print('remover_som()')
 
     def toca_som(self, id):
-        print('tocar_som(%d)' % id)
         """
         Reproduz um áudio, de acordo com o id fornecido.
 
-        Parâmetros
+        Parametros
         ----------
         id : int
             Representa o ID do som a ser reproduzido. 
         """
+        print('tocar_som(%d)' % id)
+
         # Prepara os dados
         som = self.sons[id]
         caminho = som.caminho 
@@ -272,7 +273,7 @@ class Soundboard:
         `Documentação do método export <https://github.com/jiaaro/pydub/blob/master/API.markdown#audiosegmentexport>`_
 
         Parametros
-        ----------
+        -----------
         som : Som
             Instância da classe Som. Referente ao audio que será convertido.
         """
