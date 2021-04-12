@@ -32,18 +32,18 @@ class Som:
         self.titulo = titulo
         self.volume = 100
 
-        self.dick = {
+    def to_json(self):
+        """
+        Coleta as informações do arquivo e retorna como dicionario para armazenamento.
+        """
+        dick = {
             "título": self.titulo,
             "caminho": self.caminho,
             "formato": self.id,
             "volume": self.volume,
         }
-    def salvar(self):
-        """
-        Coleta as informações do arquivo e retorna como dicionario para armazenamento.
-        """
                 
-        print (self.dick)
+        return (self.dick)
     def tocar(self):
         """
         Inicia a reprodução do som.
