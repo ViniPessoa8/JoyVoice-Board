@@ -15,11 +15,14 @@ class Som:
 
     Métodos
     -------
+    retornar()
+        Coleta as informações do arquivo e retorna como dicionario para armazenamento.
     tocar()
         Inicia a reprodução do som.
     parar()
         Para a reprodução de todos os sons em execução.
     """
+    
     def __init__(self, id_som, titulo, caminho, volume):
         """
         Construtor da classe.
@@ -29,6 +32,18 @@ class Som:
         self.titulo = titulo
         self.volume = 100
 
+    def to_json(self):
+        """
+        Coleta as informações do arquivo e retorna como dicionario para armazenamento.
+        """
+        dick = {
+            "título": self.titulo,
+            "caminho": self.caminho,
+            "formato": self.id,
+            "volume": self.volume,
+        }
+                
+        return (self.dick)
     def tocar(self):
         """
         Inicia a reprodução do som.
