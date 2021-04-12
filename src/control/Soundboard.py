@@ -62,6 +62,7 @@ class Soundboard:
             
             # Cria o arquivo 'sons.json' com o registro escrito nele.
             self.cria_arquivo_json('sons', dados_iniciais)
+        self.carrega_sons()    
 
     # Métodos #
     def adiciona_som(self, titulo, caminho):
