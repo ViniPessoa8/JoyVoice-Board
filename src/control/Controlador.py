@@ -64,7 +64,7 @@ class Controlador:
             # Verifica fim do loop
             while (True):
                 # Lẽ a resposta
-                resposta = input('\nDeseja adicionar outro arquivo?(S/N)')
+                resposta = input('\nDeseja adicionar outro arquivo?(S/N)\n')
     
                 # Verifica a resposta
                 if (resposta == 'N' or resposta == 'n'):
