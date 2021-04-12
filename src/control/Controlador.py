@@ -50,8 +50,7 @@ class Controlador:
 
             # Verifica se o arquivo é válido
             if (caminho_arquivo == '' or caminho_arquivo is None or caminho_arquivo == ()):
-                print('arquivo inválido')
-                return
+                print('Arquivo inválido.')
             else:
                 print(caminho_arquivo)
 
@@ -60,23 +59,22 @@ class Controlador:
                 print(titulo)
 
                 # Salva arquivo em sons.json
-                with open(SONS_JSON, 'rb'):
-                    self.soundboard.salva_som_json(titulo, caminho_arquivo)
+                self.soundboard.salva_som_json(titulo, caminho_arquivo)
 
-                # Verifica fim do loop
-                while (True):
-                    # Lẽ a resposta
-                    resposta = input('Deseja continuar?(S/N)')
-        
-                    # Verif
-                    if (resposta == 'N' or resposta == 'n'):
-                        rodando = False
-                        break
-                    elif (resposta == 'S' or resposta == 's'):
-                        rodando = True
-                        break
-                    else:
-                        print('Resposta inválida. Tente novamente.')
+            # Verifica fim do loop
+            while (True):
+                # Lẽ a resposta
+                resposta = input('\nDeseja adicionar outro arquivo?(S/N)')
+    
+                # Verifica a resposta
+                if (resposta == 'N' or resposta == 'n'):
+                    rodando = False
+                    break
+                elif (resposta == 'S' or resposta == 's'):
+                    rodando = True
+                    break
+                else:
+                    print('Resposta inválida. Tente novamente.')
 
     def alterar_volume(self, alt_volume_saida, alt_volume_retorno):
         self.m_volume_de_saida = alt_volume_saida
