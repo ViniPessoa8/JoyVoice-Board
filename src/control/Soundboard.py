@@ -123,7 +123,7 @@ class Soundboard:
                 # Reproduz o audio 
                 print('[Tocando {}]'.format(caminho))
                 play_obj = arq_wave.play()
-                play_obj.wait_done() # Aguarda o fim do áudio
+                # play_obj.wait_done() # Aguarda o fim do áudio
 
 
         except FileNotFoundError:
@@ -133,7 +133,9 @@ class Soundboard:
         """
         Para a reprodução do áudio em execução, se houver um.
         """
-        print('parar_som()')
+        print('para_som()')
+
+        sa.stop_all()
 
     def carrega_sons(self):
         """
