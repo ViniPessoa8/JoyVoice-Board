@@ -81,11 +81,22 @@ class Soundboard:
         """
         self.salva_som_json(titulo, caminho)
 
-    def remove_som(self):
+    def remove_som(self, titulo):
         """
         Remove um áudio da lista de sons do programa.
         """
         print('remover_som()')
+
+        # Remove o som da lista interna.
+        for som in self.sons:
+            print(som)
+            print('\''+som.titulo + '\'', '==', '\''+titulo + '\'')
+            if (som.titulo == titulo):
+                print('Remove:', som)
+                self.sons.remove(som)
+                print(self.sons)
+
+        # TODO: Reescreve o arquivo sons.json com a nova lista
 
     def toca_som(self, id):
         """
