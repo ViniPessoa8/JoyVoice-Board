@@ -1,0 +1,120 @@
+import json
+
+# Constantes
+DATA_DIR      = './data/'
+SONS_JSON     = './data/sons.json'
+TMP_AUDIO_DIR = './data/tmp_audio/'
+
+def cria_arquivo_json(nome, data):
+    """ 
+    Cria um arquivo <nome>.json no diretório 'data/', contendo <data>.
+    Parâmetros
+    ----------
+    nome: str
+        Nome do arquivo a ser criado.
+    data: dict
+        Dicionário de dados a serem escritos no arquivo criado. Os dados são 
+        escritos com a função json.dump(), por isso deve-se fornecer um dicionário
+        neste parâmetro.
+    """
+    caminho = DATA_DIR + nome + '.json' # caminho do arquivo
+    with open(caminho, 'x') as arquivo:
+        json.dump(data, arquivo, indent=2)
+
+def salva_som_json(titulo, caminho, volume=100):
+    """
+    Registra um arquivo de som na lista em 'sons.json'.
+    Parâmetros
+    ----------
+    titulo : str
+        Título identificador do arquivo.
+    caminho : str
+        Caminho do arquivo no computador do usuário.
+    volume : int
+        Volume de reprodução do áudio. 
+        Vai de 0 à 200, sendo 100 o volume normal e 200 o volume amplificado.
+        (Valor padrão: 100)
+    """
+    # Estruturação dos dados
+    formato = caminho.split('.')[-1]
+    data = {
+        'titulo' : titulo,
+        'caminho': caminho,
+        'formato': formato,
+        'volume' : volume,
+    }
+
+    # Verifica se o arquivo 'sons.json' existe
+    if (os.path.exists(SONS_JSON)):
+        # Verifica se os dados já existem no arquivo 'sons.json'
+        if (not self.checa_registro_json(data, SONS_JSON)):
+            # Se não existirem, abre o arquivo para leitura (r)
+            with open(SONS_JSON, 'r') as f:
+                # Carrega os dados na variavel 'dados'
+                dados = json.load(f)
+                # Adiciona o novo registro à lista de registros
+                dados['sons'].append(data)
+                # Print de debug
+                print(dados)
+            
+            # Se os dados não forem nulos 
+            if (dados is not None):
+                # Abre o arquivo para escrita, apagando o que tinha antes (w)
+                with open(SONS_JSON, 'w') as f:
+                    # Escreve os novos dados no arquivo
+                    json.dump(dados, f, indent=2)
+
+    # Se o arquivo 'sons.json' NÃO existe
+    else:
+        print('ERRO: Arquivo \'sons.json\' não encontrado.')
+
+def checa_registro_json(registro, caminho_json):
+
+        """
+        Checa se um <registro> já está no arquivo <caminho_json>.
+        Parâmetros
+        ----------
+        registro : dict
+            Dicionário contendo o registro a ser checado.
+            Espera-se o formato:
+            {
+                'titulo' : <str> ,
+                'caminho': <str> ,
+                'formato': <str> ,
+                'volume' : <int> ,
+            }
+        caminho_json : str
+            Caminho do arquivo onde será procurado o registro.
+        """
+        # Carrega o arquivo em modo leitura (r)
+        with open(caminho_json, 'r') as arquivo:
+            print('arquivo aberto:', caminho_json)
+            dados = json.loads(arquivo.read()) 
+            
+            # Para cada registro
+            for reg in dados['sons']:
+                # Verifica se há chaves iguais entre o registro novo e os já existentes.
+                if (reg['caminho'] == registro['caminho']):
+                    print('Registro já existe.')
+                    return True
+        
+        print('Registro não existe')
+        return False
+    
+def le_arquivo_json(caminho):
+    """
+    Dado o <caminho> do arquivo, tenta ler seu conteúdo como JSON. 
+    Se conseguir, retorna o conteúdo em forma de dicionário. 
+    """
+    # Carrega o arquivo sons.json no modo leitura (r)
+    try:
+        with open(caminho, 'r') as f:
+            # Extrai o dicionáro do arquivo sons.json
+            dados_json = json.load(f)
+            # Retorna os dados
+            return dados_json
+    # Caso o arquivo não seja encontrado
+    except FileNotFoundError as e:
+        print('[ERRO] Util: le_arquivo_json(): Arquivo não encontrado:', e)
+
+    return None
