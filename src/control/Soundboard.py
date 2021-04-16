@@ -3,13 +3,10 @@ from pydub import AudioSegment
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
 from model.Som import Som
-import json
+import util.Util as Util
 import os
 
-# Constantes
-DATA_DIR      = './data/'
-SONS_JSON     = './data/sons.json'
-TMP_AUDIO_DIR = './data/tmp_audio/'
+
 
 class Soundboard:
     """
@@ -142,21 +139,23 @@ class Soundboard:
         Função para carregar os sons a partir do arquivo sons.json,
         salvando os dados na variável 'sons' como instâncias da classe Som.
         """
-        # Carrega o arquivo sons.json no modo leitura (r)
-        with open(SONS_JSON, 'r') as f:
-            # Extrai o dicionáro do arquivo sons.json
-            dados_json = json.load(f)
+        # Lê os dados do arquivo sons.json
+        dados_json = Util.le_arquivo_json(Util.SONS_JSON)
 
-        # Transforma os dicionarios em instâncias da classe Som
-        for som in dados_json['sons']:
-            # Cria a instância da classe Som
-            som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
-            # Adiciona a instância à lista de sons.
-            self.sons.append(som)
+        # Checa se os dados foram lidos corretamente
+        if dados_json is not None:
+            # Transforma os dicionarios em instâncias da classe Som
+            for som in dados_json['sons']:
+                # Cria a instância da classe Som
+                som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
+                # Adiciona a instância à lista de sons.
+                self.sons.append(som)
+        else :
+            print('Soundboard: carrega_sons(): Erro na leitura dos dados do arquivo sons.json')
 
     # Métodos Úteis #
 
-    def seleciona_arquivo(self):
+    def seleciona_arquivo(self): # TODO: Mover para Controlador.py
         """
         Abre uma caixa de diálogo do sistema para que o usuário possa selecionar
         um arquivo do seu próprio computador.
@@ -170,102 +169,7 @@ class Soundboard:
         else:
             return ''
 
-    def cria_arquivo_json(self, nome, data):
-        """ 
-        Cria um arquivo <nome>.json no diretório 'data/', contendo <data>.
-        Parâmetros
-        ----------
-        nome: str
-            Nome do arquivo a ser criado.
-        data: dict
-            Dicionário de dados a serem escritos no arquivo criado. Os dados são 
-            escritos com a função json.dump(), por isso deve-se fornecer um dicionário
-            neste parâmetro.
-        """
-        caminho = DATA_DIR + nome + '.json' # caminho do arquivo
-        with open(caminho, 'x') as arquivo:
-            json.dump(data, arquivo, indent=2)
-
-    def salva_som_json(self, titulo, caminho, volume=100):
-        """
-        Registra um arquivo de som na lista em 'sons.json'.
-        Parâmetros
-        ----------
-        titulo : str
-            Título identificador do arquivo.
-        caminho : str
-            Caminho do arquivo no computador do usuário.
-        volume : int
-            Volume de reprodução do áudio. 
-            Vai de 0 à 200, sendo 100 o volume normal e 200 o volume amplificado.
-            (Valor padrão: 100)
-        """
-        # Estruturação dos dados
-        formato = caminho.split('.')[-1]
-        data = {
-            'titulo' : titulo,
-            'caminho': caminho,
-            'formato': formato,
-            'volume' : volume,
-        }
-
-        # Verifica se o arquivo 'sons.json' existe
-        if (os.path.exists(SONS_JSON)):
-            # Verifica se os dados já existem no arquivo 'sons.json'
-            if (not self.checa_registro_json(data, SONS_JSON)):
-                # Se não existirem, abre o arquivo para leitura (r)
-                with open(SONS_JSON, 'r') as f:
-                    # Carrega os dados na variavel 'dados'
-                    dados = json.load(f)
-                    # Adiciona o novo registro à lista de registros
-                    dados['sons'].append(data)
-                    # Print de debug
-                    print(dados)
-                
-                # Se os dados não forem nulos 
-                if (dados is not None):
-                    # Abre o arquivo para escrita, apagando o que tinha antes (w)
-                    with open(SONS_JSON, 'w') as f:
-                        # Escreve os novos dados no arquivo
-                        json.dump(dados, f, indent=2)
-
-        # Se o arquivo 'sons.json' NÃO existe
-        else:
-            print('ERRO: Arquivo \'sons.json\' não encontrado.')
-
-    def checa_registro_json(self, registro, caminho_json):
-        """
-        Checa se um <registro> já está no arquivo <caminho_json>.
-        Parâmetros
-        ----------
-        registro : dict
-            Dicionário contendo o registro a ser checado.
-            Espera-se o formato:
-            {
-                'titulo' : <str> ,
-                'caminho': <str> ,
-                'formato': <str> ,
-                'volume' : <int> ,
-            }
-        caminho_json : str
-            Caminho do arquivo onde será procurado o registro.
-        """
-        # Carrega o arquivo em modo leitura (r)
-        with open(caminho_json, 'r') as arquivo:
-            print('arquivo aberto:', caminho_json)
-            dados = json.loads(arquivo.read()) 
-            
-            # Para cada registro
-            for reg in dados['sons']:
-                # Verifica se há chaves iguais entre o registro novo e os já existentes.
-                if (reg['caminho'] == registro['caminho']):
-                    print('Registro já existe.')
-                    return True
-        
-        print('Registro não existe')
-        return False
-
-    def formata_pra_wav(self, som):
+    def formata_pra_wav(self, som): # TODO: Mover para Controlador.py
         """
         Converte um arquivo para o formato WAV, utilizando o método `export`
         da biblioteca pydub. 
@@ -297,24 +201,27 @@ class Soundboard:
         except FileNotFoundError:
             print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
-    def cria_pastas_projeto(self):
+    def cria_pastas_projeto(self): # TODO: Mover para Controlador.py
         # data/
-        if (not os.path.exists(DATA_DIR)):
-            os.mkdir(DATA_DIR)
+        if (not os.path.exists(Util.DATA_DIR)):
+            print('Diretório ' + Util.DATA_DIR + ' não existe. Criando...')
+            os.mkdir(Util.DATA_DIR)
 
         # tmp_audio/
-        if (not os.path.exists(TMP_AUDIO_DIR)):
-            os.mkdir(TMP_AUDIO_DIR)
+        if (not os.path.exists(Util.TMP_AUDIO_DIR)):
+            print('Diretório ' + Util.TMP_AUDIO_DIR + ' não existe. Criando...')
+            os.mkdir(Util.TMP_AUDIO_DIR)
 
         # data/sons.json
-        if (not os.path.exists(SONS_JSON)):
+        if (not os.path.exists(Util.SONS_JSON)):
+            print('Diretório ' + Util.SONS_JSON + ' não existe. Criando...')
             # Configura a estrutura inicial do json
             dados_iniciais = {
                 'sons': [],
             }
             
             # Cria o arquivo 'sons.json' com o registro escrito nele.
-            self.cria_arquivo_json('sons', dados_iniciais)
+            Util.cria_arquivo_json('sons', dados_iniciais)
 
     # Main #
     # Usada pra testar os métodos da classe

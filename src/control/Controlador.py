@@ -33,7 +33,11 @@ class Controlador:
         self.volume_saida = v_saida
         self.volume_retorno = v_retorno
         self.soundboard = Soundboard()
-        # TODO #1: INSTANCIA DA PAGINA PRINCIPAL
+
+        # TODO #1: Prepara pastas e arquivos
+        
+
+        # TODO #2: INSTANCIA DA PAGINA PRINCIPAL
 
         # DEBUG
         print('volume_saida = ', self.volume_saida)
