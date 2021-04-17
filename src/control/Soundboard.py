@@ -5,7 +5,7 @@ from tkinter.filedialog import askopenfilename
 from model.Som import Som
 import util.Util as Util
 import os
-
+import json
 
 
 class Soundboard:
@@ -80,21 +80,26 @@ class Soundboard:
 
     def remove_som(self, titulo):
         """
-        Remove um áudio da lista de sons do programa.
+        Remove um áudio específico do arquivo de sons.
+
+        Parametros
+        -----------
+        titulo : str
+            Titulo do áudio a ser removido. 
         """
         print('remover_som()')
 
-        # Remove o som da lista interna.
-        for som in self.sons:
-            print(som)
-            print('\''+som.titulo + '\'', '==', '\''+titulo + '\'')
-            if (som.titulo == titulo):
-                print('Remove:', som)
-                self.sons.remove(som)
-                print(self.sons)
+        # Carrega os dados presentes no arquivo de sons (sons.json)
+        dados_json = Util.le_arquivo_json(Util.SONS_JSON)
 
-        # TODO: Reescreve o arquivo sons.json com a nova lista
-        Util.escreve_em_json(Util.SONS_JSON, self.sons)
+        # Procura pelo som a ser removido, usando o parâmetro titulo 
+        for som in dados_json['sons']:
+            if (som['titulo'] == titulo):
+                # Remove o som da variavel local (dados_json)
+                dados_json['sons'].remove(som)
+
+        # Escreve os novos dados no arquivo de sons (sons.json)
+        Util.escreve_em_json(Util.SONS_JSON, dados_json)
 
     def toca_som(self, id):
         """
