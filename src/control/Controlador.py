@@ -1,7 +1,8 @@
 from .Soundboard import Soundboard
+from tkinter import Tk     # from tkinter import Tk for Python 3.x
+from tkinter.filedialog import askopenfilename
 import util.Util as Util
 import os
-from .Soundboard import SONS_JSON
 
 class Controlador:
     """
@@ -55,7 +56,7 @@ class Controlador:
         rodando = True
         while (rodando):
             # Seleciona arquivo
-            caminho_arquivo = self.soundboard.seleciona_arquivo()
+            caminho_arquivo = self.seleciona_arquivo()
 
             # Verifica se o arquivo é válido
             if (caminho_arquivo == '' or caminho_arquivo is None or caminho_arquivo == ()):
@@ -68,7 +69,7 @@ class Controlador:
                 print(titulo)
 
                 # Salva arquivo em sons.json
-                self.soundboard.salva_som_json(titulo, caminho_arquivo)
+                Util.salva_som_json(titulo, caminho_arquivo)
 
             # Verifica fim do loop
             while (True):
@@ -94,7 +95,7 @@ class Controlador:
 
     # Métodos Úteis #
 
-    def seleciona_arquivo(self): # TODO: Mover para Controlador.py
+    def seleciona_arquivo(self):
         """
         Abre uma caixa de diálogo do sistema para que o usuário possa selecionar
         um arquivo do seu próprio computador.
@@ -108,39 +109,9 @@ class Controlador:
         else:
             return ''
 
-    def formata_pra_wav(self, som): # TODO: Mover para Controlador.py
-        """
-        Converte um arquivo para o formato WAV, utilizando o método `export`
-        da biblioteca pydub. 
-        `Documentação do método export <https://github.com/jiaaro/pydub/blob/master/API.markdown#audiosegmentexport>`_
+    
 
-        Parametros
-        -----------
-        som : Som
-            Instância da classe Som. Referente ao audio que será convertido.
-        """
-        # Preparação dos dados
-        formato = som.caminho.split('.')[-1]
-
-        try:
-            with open(som.caminho, 'rb') as f:
-                # Carrega o audio
-                audio = AudioSegment.from_file(f, format=formato)
-                # Formata o caminho do arquivo
-                caminho_arquivo = './data/tmp_audio/' + som.titulo + '.wav'
-
-                # Checa se o arquivo .wav já existe, senão o cria.
-                if (not os.path.exists(caminho_arquivo)):
-                    # Usa o método export da classe pydub para converter o arquivo
-                    audio.export(caminho_arquivo, format='wav')
-                    
-                # retorna o caminho do novo arquivo .wav criado
-                return caminho_arquivo
-
-        except FileNotFoundError:
-            print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
-
-    def cria_pastas_projeto(self): # TODO: Mover para Controlador.py
+    def cria_pastas_projeto(self):
 
         # data/
         if (not os.path.exists(Util.DATA_DIR)):
