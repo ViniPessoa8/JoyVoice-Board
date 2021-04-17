@@ -117,8 +117,10 @@ def le_arquivo_json(caminho):
     return None
 
 def escreve_em_json(arq, dados):
+    print('escreve_em_json()')
     # Checa se os dados são válidos
     if (dados is not None and dados != {} and dados != []):
+        print('dados:\n'+dados)
         # Abre o arquivo para escrita
         try:
             with open(arq, 'w') as f:
