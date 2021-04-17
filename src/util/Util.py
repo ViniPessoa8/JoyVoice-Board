@@ -59,10 +59,7 @@ def salva_som_json(titulo, caminho, volume=100):
             
             # Se os dados não forem nulos 
             if (dados is not None):
-                # Abre o arquivo para escrita, apagando o que tinha antes (w)
-                with open(SONS_JSON, 'w') as f:
-                    # Escreve os novos dados no arquivo
-                    json.dump(dados, f, indent=2)
+                escreve_em_json(SONS_JSON, dados)
 
     # Se o arquivo 'sons.json' NÃO existe
     else:
@@ -118,3 +115,16 @@ def le_arquivo_json(caminho):
         print('[ERRO] Util: le_arquivo_json(): Arquivo não encontrado:', e)
 
     return None
+
+def escreve_em_json(arq, dados):
+    # Checa se os dados são válidos
+    if (dados is not None and dados != {} and dados != []):
+        # Abre o arquivo para escrita
+        try:
+            with open(arq, 'w') as f:
+                # Ecreve os dados no arquivo
+                print(arq)
+                print(dados)
+                json.dump(dados, f, indent=2)        
+        except FileNotFoundError as e:
+            print('[ERRO] Util: escreve_em(): Arquivo não encontrado.\n' + e)
