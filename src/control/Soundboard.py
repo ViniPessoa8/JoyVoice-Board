@@ -4,6 +4,8 @@ from pydub import AudioSegment
 from model.Som import Som
 import util.Util as Util
 import os
+import json
+
 
 class Soundboard:
     """
@@ -73,11 +75,28 @@ class Soundboard:
         self.salva_som_json(titulo, caminho)
         self.carrega_sons()
 
-    def remove_som(self):
+    def remove_som(self, titulo):
         """
-        Remove um áudio da lista de sons do programa.
+        Remove um áudio específico do arquivo de sons.
+
+        Parametros
+        -----------
+        titulo : str
+            Titulo do áudio a ser removido. 
         """
         print('remover_som()')
+
+        # Carrega os dados presentes no arquivo de sons (sons.json)
+        dados_json = Util.le_arquivo_json(Util.SONS_JSON)
+
+        # Procura pelo som a ser removido, usando o parâmetro titulo 
+        for som in dados_json['sons']:
+            if (som['titulo'] == titulo):
+                # Remove o som da variavel local (dados_json)
+                dados_json['sons'].remove(som)
+
+        # Escreve os novos dados no arquivo de sons (sons.json)
+        Util.escreve_em_json(Util.SONS_JSON, dados_json)
 
     def toca_som(self, id):
         """

@@ -61,10 +61,7 @@ def salva_som_json(titulo, caminho, volume=100):
             
             # Se os dados não forem nulos 
             if (dados is not None):
-                # Abre o arquivo para escrita, apagando o que tinha antes (w)
-                with open(SONS_JSON, 'w') as f:
-                    # Escreve os novos dados no arquivo
-                    json.dump(dados, f, indent=2)
+                escreve_em_json(SONS_JSON, dados)
 
     # Se o arquivo 'sons.json' NÃO existe
     else:
@@ -152,3 +149,24 @@ def formata_pra_wav(som):
 
     except FileNotFoundError:
         print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
+def escreve_em_json(arq, dados):
+    """
+    Reescreve um arquivo .json com os dados fornecidos.
+
+    Parametros
+    ----------
+    arq : str
+        Caminho do arquivo a ser reescrito.
+    dados : dict
+        Dicionário contendo os dados a serem escritos no arquivo.
+    """
+    print('escreve_em_json()')
+    # Checa se os dados são válidos
+    if (dados is not None and dados != {} and dados != []):
+        # Abre o arquivo para escrita
+        try:
+            with open(arq, 'w') as f:
+                # Ecreve os dados no arquivo
+                json.dump(dados, f, indent=2)        
+        except FileNotFoundError as e:
+            print('[ERRO] Util: escreve_em(): Arquivo não encontrado.\n' + e)
