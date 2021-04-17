@@ -94,6 +94,7 @@ class Soundboard:
                 print(self.sons)
 
         # TODO: Reescreve o arquivo sons.json com a nova lista
+        Util.escreve_em_json(Util.SONS_JSON, self.sons)
 
     def toca_som(self, id):
         """
