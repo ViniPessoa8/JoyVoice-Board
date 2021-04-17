@@ -1,12 +1,9 @@
 import simpleaudio as sa
 from pydub import AudioSegment
-from tkinter import Tk     # from tkinter import Tk for Python 3.x
-from tkinter.filedialog import askopenfilename
+
 from model.Som import Som
 import util.Util as Util
 import os
-
-
 
 class Soundboard:
     """
@@ -74,6 +71,7 @@ class Soundboard:
             Caminho do arquivo no computador do usuário.
         """
         self.salva_som_json(titulo, caminho)
+        self.carrega_sons()
 
     def remove_som(self):
         """
@@ -90,6 +88,7 @@ class Soundboard:
         id : int
             Representa o ID do som a ser reproduzido. 
         """
+        print('sons:', self.sons)
         print('tocar_som(%d)' % id)
 
         # Prepara os dados
@@ -104,7 +103,7 @@ class Soundboard:
         # Trata formato: se for mp3, converte para wav.
         if (formato != 'wav'):
             # Salva o caminho do arquivo wav
-            novo_caminho = self.formata_pra_wav(som=som)
+            novo_caminho = Util.formata_pra_wav(som=som)
             if (novo_caminho is not None):
                 caminho = novo_caminho
                 
@@ -136,6 +135,9 @@ class Soundboard:
         Função para carregar os sons a partir do arquivo sons.json,
         salvando os dados na variável 'sons' como instâncias da classe Som.
         """
+        # Limpa a lista atual de sons
+        self.sons = []
+
         # Lê os dados do arquivo sons.json
         dados_json = Util.le_arquivo_json(Util.SONS_JSON)
 
@@ -143,7 +145,6 @@ class Soundboard:
         if dados_json is not None:
             # TODO: checar se há dados
             if len(dados_json) != 0:
-                
                 # Transforma os dicionarios em instâncias da classe Som
                 for som in dados_json['sons']:
                     # Cria a instância da classe Som
