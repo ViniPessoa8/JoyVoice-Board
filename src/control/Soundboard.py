@@ -137,7 +137,6 @@ class Soundboard:
                 play_obj = arq_wave.play()
                 # play_obj.wait_done() # Aguarda o fim do áudio
 
-
         except FileNotFoundError:
             print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
 
