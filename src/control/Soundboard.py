@@ -57,9 +57,6 @@ class Soundboard:
         """    
         # Inicialização de variáveis
         self.sons    = []
-
-        # Criação das pastas do projeto
-        self.cria_pastas_projeto()
         
         # Carregamento dos sons listados no arquivo 'sons.json'
         self.carrega_sons()
@@ -144,84 +141,19 @@ class Soundboard:
 
         # Checa se os dados foram lidos corretamente
         if dados_json is not None:
-            # Transforma os dicionarios em instâncias da classe Som
-            for som in dados_json['sons']:
-                # Cria a instância da classe Som
-                som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
-                # Adiciona a instância à lista de sons.
-                self.sons.append(som)
+            # TODO: checar se há dados
+            if len(dados_json) != 0:
+                
+                # Transforma os dicionarios em instâncias da classe Som
+                for som in dados_json['sons']:
+                    # Cria a instância da classe Som
+                    som = Som(id_som=0, titulo=som['titulo'], caminho=som['caminho'], volume=som['volume'])
+                    # Adiciona a instância à lista de sons.
+                    self.sons.append(som)
+            else:
+                print('Arquivo vazio.')
         else :
             print('Soundboard: carrega_sons(): Erro na leitura dos dados do arquivo sons.json')
-
-    # Métodos Úteis #
-
-    def seleciona_arquivo(self): # TODO: Mover para Controlador.py
-        """
-        Abre uma caixa de diálogo do sistema para que o usuário possa selecionar
-        um arquivo do seu próprio computador.
-        Os arquivos aceitos são: .mp3 e .wav
-        """
-        Tk().withdraw() # Faz o programa abrir em modo janela.
-        caminho_arquivo = askopenfilename(initialdir='~/Music', filetypes=[('Audio', '*.mp3 *.wav')]) # Abre a caixa de diálogo no diretório '~/Music' 
-        if (caminho_arquivo is not None):
-            print(caminho_arquivo)
-            return caminho_arquivo
-        else:
-            return ''
-
-    def formata_pra_wav(self, som): # TODO: Mover para Controlador.py
-        """
-        Converte um arquivo para o formato WAV, utilizando o método `export`
-        da biblioteca pydub. 
-        `Documentação do método export <https://github.com/jiaaro/pydub/blob/master/API.markdown#audiosegmentexport>`_
-
-        Parametros
-        -----------
-        som : Som
-            Instância da classe Som. Referente ao audio que será convertido.
-        """
-        # Preparação dos dados
-        formato = som.caminho.split('.')[-1]
-
-        try:
-            with open(som.caminho, 'rb') as f:
-                # Carrega o audio
-                audio = AudioSegment.from_file(f, format=formato)
-                # Formata o caminho do arquivo
-                caminho_arquivo = './data/tmp_audio/' + som.titulo + '.wav'
-
-                # Checa se o arquivo .wav já existe, senão o cria.
-                if (not os.path.exists(caminho_arquivo)):
-                    # Usa o método export da classe pydub para converter o arquivo
-                    audio.export(caminho_arquivo, format='wav')
-                    
-                # retorna o caminho do novo arquivo .wav criado
-                return caminho_arquivo
-
-        except FileNotFoundError:
-            print('Arquivo não encontrado. Veririfque o caminho do som \''+som.titulo+'\'.')
-
-    def cria_pastas_projeto(self): # TODO: Mover para Controlador.py
-        # data/
-        if (not os.path.exists(Util.DATA_DIR)):
-            print('Diretório ' + Util.DATA_DIR + ' não existe. Criando...')
-            os.mkdir(Util.DATA_DIR)
-
-        # tmp_audio/
-        if (not os.path.exists(Util.TMP_AUDIO_DIR)):
-            print('Diretório ' + Util.TMP_AUDIO_DIR + ' não existe. Criando...')
-            os.mkdir(Util.TMP_AUDIO_DIR)
-
-        # data/sons.json
-        if (not os.path.exists(Util.SONS_JSON)):
-            print('Diretório ' + Util.SONS_JSON + ' não existe. Criando...')
-            # Configura a estrutura inicial do json
-            dados_iniciais = {
-                'sons': [],
-            }
-            
-            # Cria o arquivo 'sons.json' com o registro escrito nele.
-            Util.cria_arquivo_json('sons', dados_iniciais)
 
     # Main #
     # Usada pra testar os métodos da classe
