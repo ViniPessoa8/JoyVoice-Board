@@ -20,8 +20,11 @@ def cria_arquivo_json(nome, data):
         neste parâmetro.
     """
     caminho = DATA_DIR + nome + '.json' # caminho do arquivo
-    with open(caminho, 'x') as arquivo:
-        json.dump(data, arquivo, indent=2)
+    try:
+        with open(caminho, 'x') as arquivo:
+            json.dump(data, arquivo, indent=2)
+    except FileNotFoundError as e:
+        print('[ERRO] Util: cria_arquivo_json: Arquivo não encontrado.\n' + e)
 
 def salva_som_json(titulo, caminho, volume=100):
     """
@@ -51,17 +54,20 @@ def salva_som_json(titulo, caminho, volume=100):
         # Verifica se os dados já existem no arquivo 'sons.json'
         if (not checa_registro_json(data, SONS_JSON)):
             # Se não existirem, abre o arquivo para leitura (r)
-            with open(SONS_JSON, 'r') as f:
-                # Carrega os dados na variavel 'dados'
-                dados = json.load(f)
-                # Adiciona o novo registro à lista de registros
-                dados['sons'].append(data)
-                # Print de debug
-                print(dados)
+            try:
+                with open(SONS_JSON, 'r') as f:
+                    # Carrega os dados na variavel 'dados'
+                    dados = json.load(f)
+                    # Adiciona o novo registro à lista de registros
+                    dados['sons'].append(data)
+                    # Print de debug
+                    print(dados)
             
-            # Se os dados não forem nulos 
-            if (dados is not None):
-                escreve_em_json(SONS_JSON, dados)
+                # Se os dados não forem nulos 
+                if (dados is not None):
+                    escreve_em_json(SONS_JSON, dados)
+            except FileNotFoundError as e:
+                print('[ERRO] Util: salva_som_json: Arquivo não encontrado.\n' + e)
 
     # Se o arquivo 'sons.json' NÃO existe
     else:
@@ -86,17 +92,20 @@ def checa_registro_json(registro, caminho_json):
             Caminho do arquivo onde será procurado o registro.
         """
         # Carrega o arquivo em modo leitura (r)
-        with open(caminho_json, 'r') as arquivo:
-            print('arquivo aberto:', caminho_json)
-            dados = json.loads(arquivo.read()) 
-            
-            # Para cada registro
-            for reg in dados['sons']:
-                # Verifica se há chaves iguais entre o registro novo e os já existentes.
-                if (reg['caminho'] == registro['caminho']):
-                    print('Registro já existe.')
-                    return True
-        
+        try:
+            with open(caminho_json, 'r') as arquivo:
+                print('arquivo aberto:', caminho_json)
+                dados = json.loads(arquivo.read()) 
+                
+                # Para cada registro
+                for reg in dados['sons']:
+                    # Verifica se há chaves iguais entre o registro novo e os já existentes.
+                    if (reg['caminho'] == registro['caminho']):
+                        print('Registro já existe.')
+                        return True
+        except FileNotFoundError as e:
+            print('[ERRO] Util: checa_registro_json: Arquivo não encontrado:\n' + e)
+
         print('Registro não existe')
         return False
     
