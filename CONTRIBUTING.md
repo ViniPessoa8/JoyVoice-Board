@@ -3,7 +3,7 @@ A seguir há uma lista de diretrizes para contribuir com o projeto. São mais re
 
 ### Sumário
 
-[Como posso contribuir?](#como-posso-contribuir?)
+[Como posso contribuir?](#como-posso-contribuir)
 - [Reportando Bugs](#reportando-bugs)
 - [Sugestão de Melhoria](#sugestão-de-melhoria)
 
@@ -14,7 +14,16 @@ A seguir há uma lista de diretrizes para contribuir com o projeto. São mais re
 ## Reportando Bugs
 Se algum bug foi encontrado por você, [crie uma issue](https://github.com/ViniPessoa8/JoyVoice-Board/issues/new) informado do erro, e use a label `bug`.
 
+Se estiver inspirado, pode fazer um pull request corrigindo o erro. :) 
+
+  Só não esqueça de referenciar a issue criada, para que possamos saber qual o problema você está resolvendo com aquele pull request.
+
 ## Sugestão de Melhoria
+Acha que falta alguma coisa no projeto? Viu algo que pode ser melhorado?
+
+[crie uma issue](https://github.com/ViniPessoa8/JoyVoice-Board/issues/new) informando sua sugestão.
+
+Utilize a label `melhoria`.
 
 # Padrões
 ## Mensagens de Commit
