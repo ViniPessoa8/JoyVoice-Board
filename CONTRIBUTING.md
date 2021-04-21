@@ -1,5 +1,5 @@
 # Contribuindo para JoyVoice Board
-A seguir há uma lista de diretrizes para contribuir com o projeto. São regras e recomendações para facilitar o entendimento da sua contribuição, lembre-se de ser descritivo e fique a vontade para fazer um pull request.
+A seguir há uma lista de diretrizes para contribuir com o projeto. São regras e recomendações para facilitar o entendimento da sua contribuição. Lembre-se de ser descritivo e fique a vontade para fazer um pull request.
 
 ## Sumário
 
@@ -8,6 +8,8 @@ A seguir há uma lista de diretrizes para contribuir com o projeto. São regras 
 - [Implementando Melhorias](#implementando-melhorias)
 - [Sugestão de melhorias](#sugerindo-melhorias)
 
+### [Guia para contribuir](#guia-para-contribuir)
+
 ### [Padrões](#padrões)
 - [Mensagens de Commit](#mensagens-de-commit)
 - [Pull Requests](#pull-requests)
@@ -15,9 +17,9 @@ A seguir há uma lista de diretrizes para contribuir com o projeto. São regras 
 
 # Formas de contribuir
 ## Reportando Bugs
-Se algum bug foi encontrado por você, [crie uma issue](https://github.com/ViniPessoa8/JoyVoice-Board/issues/new) informado do erro, e use a label `bug`.
+Se você encontrou algum bug, [crie uma issue](https://github.com/ViniPessoa8/JoyVoice-Board/issues/new) utilizando a label `bug`.
 
-Se estiver inspirado, pode fazer um pull request corrigindo o erro. :) 
+Se estiver inspirado, pode fazer um [pull request](#pull-requests) corrigindo o erro. :) 
 
 Só não esqueça de referenciar a issue criada, para que possamos saber qual o problema você está resolvendo com aquele pull request.
 
