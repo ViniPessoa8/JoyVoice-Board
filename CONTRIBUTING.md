@@ -26,9 +26,9 @@ Só não esqueça de referenciar a issue criada, para que possamos saber qual o 
 ## Implementando Melhorias
 Há uma lista de [issues](https://github.com/ViniPessoa8/JoyVoice-Board/issues) que você pode resolver. Além disso, na documentação do projeto há mais tarefas a serem desenvolvidas.
 
-Escolha uma e atribua-se à ela.
-- Se for uma **Issue**, atribua seu usuário do github à ela.
-- Se for uma **tarefa na documentação do projeto**, mova-a para a coluna 'Fazendo' e, se posssível, atribua-se à tarefa. 
+**Atenção**:
+- Se for uma **Issue**, adicione a label `em progresso`.
+- Se for uma **tarefa na documentação do projeto**, mova-a para a coluna 'Fazendo'. 
 
 ## Sugerindo Melhorias
 Acha que falta alguma coisa no projeto? Viu algo que pode ser melhorado?
