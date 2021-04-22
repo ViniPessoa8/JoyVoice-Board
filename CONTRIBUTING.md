@@ -73,6 +73,7 @@ Muito obrigado!
   - refactor : Refatoração de código em produção (ex. renomear variável)
   - test     : Adição de testes
   - clean    : Remoção de código morto/arquivos 
+  - chore    : Mudanças em arquivos de desenvolvimento, sem mudanças em código de produção. 
   
   *Obs: Os prefixos estão em inglês por conta da pouca quantidade de caracteres utilizada. 
   
