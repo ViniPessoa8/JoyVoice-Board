@@ -85,6 +85,7 @@ Muito obrigado!
   - `refactor: renomeia varáveis da classe 'Efeito'.`
   - `test: cria teste de tocar som.`
   - `clean: remove arquivo 'teste.py'`
+  - `chore: adiciona pasta no .gitignore`
 
 ## Pull Requests
 Ao fazer um pull request, deve-se atentar para a branch a qual você quer mesclar, e também qual issue você está resolvendo.
