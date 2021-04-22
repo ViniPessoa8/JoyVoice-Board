@@ -32,5 +32,5 @@ def teste_remove_som(self):
     """
     Remove o primeiro som da lista de sons, removendo-o também do arquivo sons.json
     """
-    self.controlador.soundboard.remove_som('com - Ratinho vinheta')
+    self.controlador.soundboard.remove_som(0)
 

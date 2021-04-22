@@ -75,25 +75,25 @@ class Soundboard:
         self.salva_som_json(titulo, caminho)
         self.carrega_sons()
 
-    def remove_som(self, titulo):
+    def remove_som(self, id):
         """
         Remove um áudio específico do arquivo de sons.
 
         Parametros
         -----------
-        titulo : str
-            Titulo do áudio a ser removido. 
+        id : int
+            ID do áudio a ser removido. 
         """
         print('remover_som()')
 
         # Carrega os dados presentes no arquivo de sons (sons.json)
         dados_json = Util.le_arquivo_json(Util.SONS_JSON)
 
-        # Procura pelo som a ser removido, usando o parâmetro titulo 
-        for som in dados_json['sons']:
-            if (som['titulo'] == titulo):
-                # Remove o som da variavel local (dados_json)
-                dados_json['sons'].remove(som)
+        # # Procura pelo som a ser removido, usando o parâmetro titulo 
+        # for som in dados_json['sons']:
+        #     if (som['titul'] == titulo):
+        # Remove o som da variavel local (dados_json)
+        dados_json['sons'].remove(sons[id])
 
         # Escreve os novos dados no arquivo de sons (sons.json)
         Util.escreve_em_json(Util.SONS_JSON, dados_json)
