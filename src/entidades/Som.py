@@ -44,14 +44,3 @@ class Som:
         }
                 
         return (self.dick)
-    def tocar(self):
-        """
-        Inicia a reprodução do som.
-        """
-        print('tocar()')
-
-    def parar(self):
-        """
-        Para a reprodução de todos os sons em execução.
-        """
-        print('parar()')
