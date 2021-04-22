@@ -32,15 +32,15 @@ class Som:
         self.titulo = titulo
         self.volume = 100
 
-    def to_json(self):
+    def to_dict(self):
         """
         Coleta as informações do arquivo e retorna como dicionario para armazenamento.
         """
-        dick = {
+        json_dict = {
             "título": self.titulo,
             "caminho": self.caminho,
             "formato": self.id,
             "volume": self.volume,
         }
                 
-        return (self.dick)
+        return json_dict
