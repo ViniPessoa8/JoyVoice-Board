@@ -1,10 +1,31 @@
 # JoyVoice-Board
-### Soudboard e modificador de voz, feito em Python.
+## Sumário
+1. [Sobre o projeto](#sobre)
 
-Pensado para ser usado em chamadas, como no Discord. 
+2. [Executando](#executando)
 
-Os sons do soundboard são reproduzidos tanto no dispositivo de saída do usuáirio (caixa de som/fones de ouvido) quanto no dispositivo de entrada (microfone), para que possa ser ouvido por outras pessoas.
+3. [Contribuindo](#contribuindo)
 
-Além dos sons, também aplicar efeitos diversos à voz do usuário. Efeitos como eco e mudança de tom.
+## Sobre
+JoyVoice-Board é um Soundboard e um alterador de voz. O soundboard permite que o usuário escolha sons do seu computador e execute-os com um atalho do teclado, podendo exeutar mais de um som ao mesmo tempo e também interrompê-los. Já o alterador de voz tem uma lista pré-definida de efeitos utilizáveis, onde o usuário apenas precisa escolher na lista de efeitos e ativar os que deseja. 
+
+Foi pensando para ser utilizado em video-chamadas, por exemplo no discord.
+
+Os sons do soundboard são reproduzidos tanto no dispositivo de saída do usuário (caixa de som/fones de ouvido) quanto no dispositivo de entrada (microfone), para que os sons possam ser ouvidos por outras pessoas em uma chamada.
 
 [Link para a documentação do projeto.](https://www.notion.so/vinipessoa/JoyVoice-Board-7af8fab0ca864484a329d0794d67e31a)
+
+## Executando
+Para executar o projeto, é necessário utilizar o ambiente virtual do projeto (venv).
+Para utilizá-lo, basta executar o seguinte comando em um terminal no diretório do projeto:
+```
+source /joyvoice-board/bin/activate
+```
+
+O arquivo de execução principal é o `/src/Main.py`.
+para executá-lo, utilize o seguinte comando:
+```
+python /src/Main.py
+```
+## Contribuindo
+Seja muito bem-vindo para contribuir com o projeto. Para isso, siga as [instruções de desenvolvimento](https://github.com/ViniPessoa8/JoyVoice-Board/blob/937b9278ab5ab6bc8cccf456a51e2d43d0cd3adf/CONTRIBUTING.md).
